@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>カフェ草履 シミュレーター</title>
+<style>
+body { font-family: sans-serif; background:#f5f5f5; padding:20px; }
+.wrap { max-width:900px; margin:auto; background:#fff; padding:20px; border-radius:12px; }
+.row { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.preview { position:relative; width:100%; aspect-ratio: 10/7; background:#fafafa; border:1px solid #ddd; }
+.preview img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
+select { width:100%; padding:8px; margin-bottom:12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h2>カフェ草履 組み合わせ確認</h2>
+<div class="row">
+  <div>
+    <label>台を選ぶ</label>
+    <select id="dai"></select>
+    <label>鼻緒を選ぶ</label>
+    <select id="hanao"></select>
+  </div>
+  <div class="preview">
+    <img id="daiImg">
+    <img id="hanaoImg">
+  </div>
+</div>
+</div>
+
+<script src="config.js"></script>
+<script>
+const daiSel = document.getElementById("dai");
+const hanaoSel = document.getElementById("hanao");
+const daiImg = document.getElementById("daiImg");
+const hanaoImg = document.getElementById("hanaoImg");
+const cfg = window.CAFEZORI_CONFIG;
+
+cfg.dai.forEach(d => {
+  const o = document.createElement("option");
+  o.value = d.image;
+  o.textContent = d.label;
+  daiSel.appendChild(o);
+});
+cfg.hanao.forEach(h => {
+  const o = document.createElement("option");
+  o.value = h.image;
+  o.textContent = h.label;
+  hanaoSel.appendChild(o);
+});
+
+function render() {
+  daiImg.src = daiSel.value;
+  hanaoImg.src = hanaoSel.value;
+}
+
+daiSel.onchange = render;
+hanaoSel.onchange = render;
+
+render();
+</script>
+</body>
+</html>
